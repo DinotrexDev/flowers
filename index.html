@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            background-color: #111;
+            color: #eee;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .heart-button {
+            position: relative;
+            padding: 20px 40px;
+            background-color: #e60073;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 24px;
+            margin-top: 60px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .heart-button:hover {
+            background-color: #d90069;
+            transform: scale(1.05);
+        }
+
+        #love-message {
+            font-size: 48px;
+            margin-top: 80px;
+            color: #eee;
+            font-style: italic;
+            text-shadow: 2px 2px 4px #333;
+            font-weight: bold;
+        }
+
+        .heart2 {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            animation: pulse 1.5s infinite cubic-bezier(0.66, 0, 0.33, 1);
+        }
+
+        .heart2:before,
+        .heart2:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            background: red;
+        }
+
+        .heart2:before {
+            left: 50px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7);
+        }
+
+        .heart2:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+            box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="backgroundAudio" loop>
+        <source src="./music/music.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="container">
+        <p id="love-message">Only For <span style="color: red;">You</span></p>
+        <div class="heart2"></div>
+        <button onclick="playAndNavigate()" class="heart-button"><span>Click me 🥰</span></button>
+    </div>
+
+    <script>
+        // Check if audio should be playing from previous page
+        document.addEventListener("DOMContentLoaded", function () {
+            let audio = document.getElementById("backgroundAudio");
+
+            // If session storage indicates audio should be playing
+            if (sessionStorage.getItem("isAudioPlaying") === "true") {
+                audio.play().catch(err => console.log("Autoplay blocked:", err));
+            }
+        });
+
+        function playAndNavigate() {
+            let audio = document.getElementById("backgroundAudio");
+
+            audio.play().then(() => {
+                sessionStorage.setItem("isAudioPlaying", "true"); // Store state
+                window.location.href = "flowers.html"; // Navigate
+            }).catch(err => console.log("Playback error:", err));
+        }
+    </script>
+
+</body>
+
+</html>
